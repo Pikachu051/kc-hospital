@@ -7,22 +7,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { AlertOctagon } from 'lucide-react';
 
 const FormSchema = z.object({
-    username: z.string().min(1, {
-        message: "Username must be at least 1 characters. "
-    }),
-    password: z.string()
+    username: z.string().min(1, 'โปรดใส่ชื่อผู้ใช้'),
+    password: z.string().min(1, 'โปรดใส่รหัสผ่าน'),
 })
 
 const SignInForm = () => {
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
-    })
+        defaultValues: {
+            username: '',
+            password: '',
+        },
+    });
 
-    const onSubmit = () => {
-        console.log('Form submited!')
+    const onSubmit = (values:z.infer<typeof FormSchema> ) => {
+        console.log(values);
     }
 
     return (
@@ -49,7 +52,7 @@ const SignInForm = () => {
             <FormItem>
                 <FormLabel>รหัสผ่าน</FormLabel>
                 <FormControl>
-                <Input placeholder="Password" {...field} />
+                <Input placeholder="Password" type="password"{...field} />
                 </FormControl>
                 <FormMessage />
             </FormItem>
