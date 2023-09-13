@@ -7,7 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { AlertOctagon } from 'lucide-react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
     username: z.string().min(1, 'โปรดใส่ชื่อผู้ใช้'),
@@ -15,7 +16,7 @@ const FormSchema = z.object({
 })
 
 const SignInForm = () => {
-
+    const router = useRouter();
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -24,8 +25,22 @@ const SignInForm = () => {
         },
     });
 
-    const onSubmit = (values:z.infer<typeof FormSchema> ) => {
-        console.log(values);
+    const onSubmit = async (values:z.infer<typeof FormSchema> ) => {
+        const signInData = await signIn('credentials', {
+            username: values.username,
+            password: values.password,
+            redirect: false,
+        });
+        
+        if (signInData?.error){
+            console.log(signInData.error);
+        } 
+        //else if (){
+        //    router.push('/admin/home');
+        //}
+        else {
+            router.push('/');
+        }
     }
 
     return (

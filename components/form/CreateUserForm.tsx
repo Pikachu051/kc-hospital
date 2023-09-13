@@ -6,7 +6,6 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { AlertOctagon } from 'lucide-react';
 import { useRouter } from "next/navigation";
 
 const FormSchema = z
@@ -14,7 +13,7 @@ const FormSchema = z
     firstName: z.string().min(1, 'โปรดใส่ชื่อจริงของผู้ใช้บัญชี'),
     lastName: z.string().min(1, 'โปรดใส่นามสกุลของผู้ใช้บัญชี'),
     username: z.string().min(1, 'โปรดใส่ชื่อผู้ใช้'),
-    password: z.string().min(1, 'โปรดใส่รหัสผ่าน'),
+    password: z.string().min(1, 'โปรดใส่รหัสผ่าน').min(8, 'รหัสผ่านต้องมีขั้นต่ำ 8 ตัวอักษร'),
     confirmPassword: z.string().min(1, "โปรดยืนยันรหัสผ่านก่อนดำเนินการต่อ"),
 })
 .refine((data) => data.password === data.confirmPassword, {
