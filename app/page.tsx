@@ -13,7 +13,7 @@ export default function Home() {
     <main className={prompt.className}>
       <div className="bg-stone-200 h-[28rem] w-96 rounded-md">
         <div className="object-center z-10 w-full items-center text-center justify-center lg:flex">
-          <p className='text-2xl pt-5'><strong className='text-3xl'>โรงพยาบาลบ้านๆ</strong><br></br>ยินดีต้อนรับ</p>
+          <p className='text-2xl pt-5'><strong className='text-3xl'>ระบบจัดการผู้ป่วยใน</strong><br></br>ยินดีต้อนรับ</p>
           
         </div>
         <div className='pl-2 pr-6 pt-3 w-full m-2 items-center justify-center'>
