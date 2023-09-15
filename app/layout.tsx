@@ -1,3 +1,4 @@
+import NavBar from '@/components/ui/NavBar'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Kanit } from 'next/font/google'
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={kanit.className}>
         <main className='h-screen flex flex-col justify-center items-center'>
+          <NavBar />
           {children}
         </main>
       </body>
