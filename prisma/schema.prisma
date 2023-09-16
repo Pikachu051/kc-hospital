@@ -23,6 +23,62 @@ model User{
   lastName String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
   role UserRole @default(USER)
+}
+
+
+model Patient_Info{
+  hn_id String @id
+  name String
+  admit_date DateTime @default(now())
+  discharge_date DateTime
+  age Int
+  address String
+  contact String
+  department String
+  coverage String
+  admit_length Int
+  symptom String
+  icd10 String
+  dxtype String
+  diagDoctor String
+  admitDoctor String
+  bed String
+  transfer_history String
+}
+
+model Transfer_History{
+  hn_id String @id
+  transfer_date DateTime @default(now())
+  transfer_from String
+  transfer_to String
+}
+
+model Bed{
+  bed_id String @id
+  bed_status String
+  ward String
+}
+
+model Symptom{
+  icd10 String @id
+  desc String
+}
+
+model DxType{
+  dxtype String @id
+  desc String
+}
+
+model Physician{
+  physician_id Int @id @default(autoincrement())
+  name String
+  department String
+}
+
+model Contact{
+  contact_id Int @id @default(autoincrement())
+  name String
+  phone String
+  relation String
 }

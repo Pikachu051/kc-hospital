@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 const FormSchema = z.object({
     username: z.string().min(1, 'โปรดใส่ชื่อผู้ใช้'),
@@ -17,6 +18,7 @@ const FormSchema = z.object({
 
 const SignInForm = () => {
     const router = useRouter();
+    const { toast } = useToast();
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -33,12 +35,14 @@ const SignInForm = () => {
         });
         
         if (signInData?.error){
-            console.log(signInData.error);
-        } 
-        // else if (signInData?.url){
-        //    router.push('/admin/home');
-        // }
+            toast({
+                title: 'เข้าสู่ระบบไม่สำเร็จ',
+                description: "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง",
+                variant: 'destructive',
+            })
+        }
         else {
+            router.refresh();
             router.push('/');
         }
     }

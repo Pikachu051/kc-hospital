@@ -2,6 +2,7 @@ import NavBar from '@/components/ui/NavBar'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Kanit } from 'next/font/google'
+import { Toaster } from '@/components/ui/toaster'
 
 const kanit = Kanit({ 
   weight: '500',
@@ -24,6 +25,7 @@ export default function RootLayout({
           <NavBar />
           {children}
         </main>
+        <Toaster />
       </body>
     </html>
   )

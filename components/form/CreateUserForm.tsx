@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 const FormSchema = z
 .object({
@@ -23,6 +24,7 @@ const FormSchema = z
 
 const CreateUserForm = () => {
     const router = useRouter();
+    const { toast } = useToast();
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -51,7 +53,11 @@ const CreateUserForm = () => {
         if (response.ok) {
             router.push('/admin/home');
         } else {
-            console.error("Registration failed");
+            toast({
+                title: 'สร้างบัญชีผู้ใช้ไม่สำเร็จ',
+                description: "ชื่อผู้ใช้นี้มีอยู่ในระบบแล้ว",
+                variant: 'destructive',
+            });
         }
     }
 
