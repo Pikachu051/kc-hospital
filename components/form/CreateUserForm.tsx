@@ -57,7 +57,7 @@ const CreateUserForm = () => {
                 title: 'สร้างบัญชีผู้ใช้ไม่สำเร็จ',
                 description: "ชื่อผู้ใช้นี้มีอยู่ในระบบแล้ว",
                 variant: 'destructive',
-            });
+            })
         }
     }
 

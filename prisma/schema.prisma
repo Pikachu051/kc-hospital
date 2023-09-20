@@ -27,8 +27,8 @@ model User{
 }
 
 
-model Patient_Info{
-  hn_id String @id
+model Patientinfo{
+  hnid String @id
   name String
   admit_date DateTime @default(now())
   discharge_date DateTime
@@ -48,7 +48,7 @@ model Patient_Info{
 }
 
 model Transfer_History{
-  hn_id String @id
+  hnid String @id
   transfer_date DateTime @default(now())
   transfer_from String
   transfer_to String
