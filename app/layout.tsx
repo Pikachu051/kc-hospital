@@ -21,10 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={kanit.className}>
-        <main className='h-screen flex flex-col justify-center items-center'>
+        <div className='h-screen justify-center items-center flex flex-col'>
           <NavBar />
           {children}
-        </main>
+        </div>
         <Toaster />
       </body>
     </html>

@@ -16,69 +16,117 @@ enum UserRole {
 }
 
 model User{
-  id Int @id @default(autoincrement())
-  username String @unique
-  password String @unique
-  firstName String
-  lastName String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id Int @default(autoincrement())
+  username String @id @unique @db.VarChar(255)
+  password String @unique @db.VarChar(255)
+  firstName String @db.VarChar(80)
+  lastName String @db.VarChar(80)
   role UserRole @default(USER)
+
+  loginHistory LoginHistory[]
 }
 
+model LoginHistory{
+  username String @db.VarChar(255)
+  loginDate DateTime @default(now()) @db.Date
+  loginTime DateTime @default(now()) @db.Time(3)
+
+  @@id([loginDate, loginTime])
+  user User @relation(fields: [username], references: [username])
+}
 
 model Patientinfo{
-  hnid String @id
-  name String
-  admit_date DateTime @default(now())
-  discharge_date DateTime
-  age Int
-  address String
-  contact String
-  department String
-  coverage String
-  admit_length Int
-  symptom String
-  icd10 String
-  dxtype String
-  diagDoctor String
-  admitDoctor String
-  bed String
-  transfer_history String
+  hnid Int @id @default(autoincrement())
+  prefix String @db.VarChar(15)
+  firstName String @db.VarChar(80)
+  lastName String @db.VarChar(80)
+  idcard String @db.VarChar(13)
+  sex String @db.VarChar(1)
+  dob DateTime @db.Date
+  address String @db.VarChar(255)
+  tel String @db.VarChar(10)
+  workphone String @db.VarChar(10)
+  phone String @db.VarChar(10)
+  bloodType String @db.VarChar(3)
+  medCondi String @db.VarChar(255)
+  coverage String @db.VarChar(255)
+
 }
 
-model Transfer_History{
-  hnid String @id
-  transfer_date DateTime @default(now())
-  transfer_from String
-  transfer_to String
+model MedicalCoverage{
+  coverage_id Int @id @default(autoincrement())
+  coverage_name String @db.VarChar(255)
+  coverage_manager String @db.VarChar(160)
+
+}
+
+model Admit{
+  doctor_id Int
+  hnid Int @id
+  admit_date DateTime @default(now()) @db.Date
+  admit_time DateTime @default(now()) @db.Time(3)
+  ward String @db.VarChar(1)
+  room_id String @db.VarChar(3)
+  dept_id String @db.VarChar(10)
+  contact String @db.VarChar(160)
+  symptom String @db.VarChar(255)
+
+}
+
+enum bed_status{
+  VACANT
+  BUSY
+}
+
+model TransferHistory{
+  hnid Int
+  doctor_id Int
+  transfer_date DateTime @default(now()) @db.Date
+  transfer_time DateTime @default(now()) @db.Time(3)
+  oldBed_id String @db.VarChar(7)
+  newBed_id String @db.VarChar(7)
+  reason String @db.VarChar(255)
+
+  @@id([hnid, transfer_date])
 }
 
 model Bed{
-  bed_id String @id
-  bed_status String
-  ward String
+  bed_id String @id @db.VarChar(7)
+  room_id String @db.VarChar(3)
+  ward String @db.VarChar(1)
+  bed_status bed_status @default(VACANT)
+
+
 }
 
-model Symptom{
-  icd10 String @id
-  desc String
+model ICD10{
+  icd_id String @id @db.VarChar(10)
+  description String @db.VarChar(255)
+
 }
 
-model DxType{
-  dxtype String @id
-  desc String
+model Diagnosis{
+  doctor_id Int
+  hnid Int
+  diag_date DateTime @default(now()) @db.Date
+  icd_id String @db.VarChar(10)
+  dxType String @db.VarChar(30)
+
+  @@id([doctor_id, hnid, diag_date])
+
 }
 
-model Physician{
-  physician_id Int @id @default(autoincrement())
-  name String
-  department String
+model Doctor{
+  doctor_id Int @id @default(autoincrement())
+  firstName String @db.VarChar(80)
+  lastName String @db.VarChar(80)
+  dept_id String @db.VarChar(10)
+
 }
 
-model Contact{
-  contact_id Int @id @default(autoincrement())
-  name String
-  phone String
-  relation String
+model Department{
+  dept_id String @id @db.VarChar(10)
+  dept_name String @db.VarChar(100)
 }
+
+

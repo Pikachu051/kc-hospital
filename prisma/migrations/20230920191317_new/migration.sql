@@ -38,4 +38,3 @@ CREATE TABLE "Patientinfo" (
 
     CONSTRAINT "Patientinfo_pkey" PRIMARY KEY ("hnid")
 );
---ALTER SEQUENCE "Patientinfo_hnid_seq" MINVALUE 0 START 0 RESTART 0;
