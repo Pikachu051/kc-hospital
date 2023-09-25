@@ -1,5 +1,6 @@
 import NextAuth from "next-auth"
 import { UserRole } from ".prisma/client"
+import { DefaultJWT } from "next-auth/jwt"
 
 declare module "next-auth" {
     interface User {
@@ -18,5 +19,13 @@ declare module "next-auth" {
             lastName: string,
             role: UserRole
         }
+    }
+}
+
+declare module "next-auth/jwt" {
+    interface JWT extends DefaultJWT{
+        firstName: string,
+        lastName: string,
+        role: UserRole
     }
 }

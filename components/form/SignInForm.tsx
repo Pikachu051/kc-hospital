@@ -16,26 +16,6 @@ const FormSchema = z.object({
     username: z.string().min(1, 'โปรดใส่ชื่อผู้ใช้'),
     password: z.string().min(1, 'โปรดใส่รหัสผ่าน'),
 })
-            
-function padTo2Digits(num: number) {
-    return num.toString().padStart(2, '0');
-}
-
-function formatDate(date: Date) {
-    return [
-        padTo2Digits(date.getDate()),
-        padTo2Digits(date.getMonth() + 1),
-        date.getFullYear(),       
-    ].join('/');
-}
-
-function formatTime(date: Date) {
-    return [
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds(),
-    ].join(':');
-}
 
 const SignInForm = () => {
     const router = useRouter();
@@ -85,13 +65,8 @@ const SignInForm = () => {
                     variant: 'destructive',
                 })
             }
-            // if (session?.user.role === 'ADMIN'){
-            //     router.refresh();
-            //     router.push('/admin/home');
-            // } else {
             router.refresh();
-            router.push('/user/home');
-            // }
+            router.push('/');
         }
     }
 

@@ -1,6 +1,10 @@
+import { PageWrapper } from "@/components/PageWrapper";
+
 const page = () => {
     return (
-        <div className="text-xl">IT Support</div>
+        <PageWrapper>
+            <div className="text-xl">IT Support</div>
+        </PageWrapper>
     )
 }
 
