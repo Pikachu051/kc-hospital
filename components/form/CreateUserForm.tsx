@@ -54,7 +54,7 @@ const CreateUserForm = () => {
             router.push('/admin/home');
             toast({
                 title: 'สร้างบัญชีผู้ใช้สำเร็จ',
-                description: "สร้างบัญชีผู้ใช้สำเร็จ",
+                description: "An account has been created.",
                 variant: 'default',
             })
         } else {

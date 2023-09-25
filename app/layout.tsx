@@ -5,7 +5,7 @@ import { Kanit } from 'next/font/google'
 import { Toaster } from '@/components/ui/toaster'
 
 const kanit = Kanit({ 
-  weight: '500',
+  weight: ['200', '300', '400', '500'],
   subsets: ['thai'] })
 
 export const metadata: Metadata = {
