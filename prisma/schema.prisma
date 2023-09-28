@@ -21,9 +21,11 @@ model User{
   password String @unique @db.VarChar(255)
   firstName String @db.VarChar(80)
   lastName String @db.VarChar(80)
+  doctor_id Int @unique
   role UserRole @default(USER)
 
   loginHistory LoginHistory[]
+  doctor Doctor @relation(fields: [doctor_id], references: [doctor_id])
 }
 
 model LoginHistory{
@@ -49,8 +51,12 @@ model Patientinfo{
   phone String @db.VarChar(10)
   bloodType String @db.VarChar(3)
   medCondi String @db.VarChar(255)
-  coverage String @db.VarChar(255)
+  coverage_id Int
 
+  mediCov MedicalCoverage @relation(fields: [coverage_id], references: [coverage_id])
+  transferHistory TransferHistory[]
+  admit Admit[]
+  diag Diagnosis[]
 }
 
 model MedicalCoverage{
@@ -58,6 +64,7 @@ model MedicalCoverage{
   coverage_name String @db.VarChar(255)
   coverage_manager String @db.VarChar(160)
 
+  patientInfo Patientinfo[]
 }
 
 model Admit{
@@ -68,9 +75,14 @@ model Admit{
   ward String @db.VarChar(1)
   room_id String @db.VarChar(3)
   dept_id String @db.VarChar(10)
+  bed_id String @db.VarChar(7) @unique
   contact String @db.VarChar(160)
   symptom String @db.VarChar(255)
 
+  doctor Doctor @relation(fields: [doctor_id], references: [doctor_id])
+  bed Bed @relation(fields: [bed_id], references: [bed_id])
+  dept Department @relation(fields: [dept_id], references: [dept_id])
+  patient Patientinfo @relation(fields: [hnid], references: [hnid])
 }
 
 enum bed_status{
@@ -83,11 +95,15 @@ model TransferHistory{
   doctor_id Int
   transfer_date DateTime @default(now()) @db.Date
   transfer_time DateTime @default(now()) @db.Time(3)
-  oldBed_id String @db.VarChar(7)
-  newBed_id String @db.VarChar(7)
+  oldBed_id String @db.VarChar(7) @unique
+  newBed_id String @db.VarChar(7) @unique
   reason String @db.VarChar(255)
 
   @@id([hnid, transfer_date])
+  doctor Doctor @relation(fields: [doctor_id], references: [doctor_id])
+  oldBed Bed @relation("transferFrom", fields: [oldBed_id], references: [bed_id])
+  newBed Bed @relation("transferTo", fields: [newBed_id], references: [bed_id])
+  patient Patientinfo @relation(fields: [hnid], references: [hnid])
 }
 
 model Bed{
@@ -96,13 +112,16 @@ model Bed{
   ward String @db.VarChar(1)
   bed_status bed_status @default(VACANT)
 
-
+  admit Admit?
+  transferNew TransferHistory[] @relation("transferTo")
+  transferOld TransferHistory[] @relation("transferFrom")
 }
 
 model ICD10{
   icd_id String @id @db.VarChar(10)
   description String @db.VarChar(255)
 
+  diagnosis Diagnosis[]
 }
 
 model Diagnosis{
@@ -113,7 +132,8 @@ model Diagnosis{
   dxType String @db.VarChar(30)
 
   @@id([doctor_id, hnid, diag_date])
-
+  icd ICD10 @relation(fields: [icd_id], references: [icd_id])
+  patient Patientinfo @relation(fields: [hnid], references: [hnid])
 }
 
 model Doctor{
@@ -122,11 +142,18 @@ model Doctor{
   lastName String @db.VarChar(80)
   dept_id String @db.VarChar(10)
 
+  user User?
+  transferHistory TransferHistory[]
+  admit Admit[]
+  dept Department @relation(fields: [dept_id], references: [dept_id])
 }
 
 model Department{
   dept_id String @id @db.VarChar(10)
   dept_name String @db.VarChar(100)
+
+  admit Admit[]
+  doctor Doctor[]
 }
 
 

@@ -21,9 +21,9 @@ const page = async () => {
         <Image src={logo} alt='Inpatient logo' width={165} height={165} style={{maxWidth: '100%', height: 'auto',}}></Image>
       </div>
       <div className='justify-items-center grid gap-[8vem] grid-cols-3 grid-rows-1'>
-        <Button className='bg-red-400 w-[12rem] h-[8rem]'>กรอกข้อมูลผู้ป่วย</Button>
-        <Button className='bg-red-400 w-[12rem] h-[8rem]'>ข้อมูลผู้ป่วย</Button>
-        <Button className='bg-red-400 w-[12rem] h-[8rem]'>ข้อมูลการรักษา</Button>
+        <Button className='bg-red-400 w-[12rem] h-[8rem] text-lg'>แอดมิท</Button>
+        <Button className='bg-red-400 w-[12rem] h-[8rem] text-lg'>รายชื่อผู้ป่วยใน</Button>
+        <Button className='bg-red-400 w-[12rem] h-[8rem] text-lg'>ข้อมูลผู้ป่วย</Button>
       </div>
   </div>
   </PageWrapper>

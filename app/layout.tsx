@@ -9,7 +9,7 @@ const kanit = Kanit({
   subsets: ['thai'] })
 
 export const metadata: Metadata = {
-  title: 'Bahn Bahn',
+  title: 'In-Patient Department System',
   description: '',
 }
 
