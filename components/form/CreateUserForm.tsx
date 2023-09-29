@@ -8,6 +8,22 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import * as React from "react"
+import { Check, ChevronsUpDown } from "lucide-react"
+ 
+import { cn } from "@/lib/utils"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 const FormSchema = z
 .object({
@@ -22,7 +38,76 @@ const FormSchema = z
     message: "รหัสผ่านไม่ตรงกัน",
 });
 
+const depts = [
+    {
+      value: "ANC",
+      label: "ANC",
+    },
+    {
+      value: "CCU",
+      label: "CCU",
+    },
+    {
+      value: "ER",
+      label: "ER",
+    },
+    {
+      value: "IPD",
+      label: "IPD",
+    },
+    {
+      value: "ICU",
+      label: "ICU",
+    },
+    {
+      value: "LAB",
+      label: "LAB",
+    },
+    {
+      value: "LR",
+      label: "LR",
+    },
+    {
+      value: "MED",
+      label: "MED",
+    },
+    {
+      value: "NICU",
+      label: "NICU",
+    },
+    {
+      value: "OB-GYN",
+      label: "OB-GYN",
+    },
+    {
+      value: "OPD",
+      label: "OPD",
+    },
+    {
+      value: "OR",
+      label: "OR",
+    },
+    {
+      value: "ORTHO",
+      label: "ORTHO",
+    },
+    {
+      value: "PED",
+      label: "PED",
+    },
+    {
+      value: "PICU",
+      label: "PICU",
+    },
+    {
+      value: "SUR",
+      label: "SUR",
+    }
+]
+
 const CreateUserForm = () => {
+    const [open, setOpen] = React.useState(false)
+    const [value, setValue] = React.useState("")
     const router = useRouter();
     const { toast } = useToast();
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -46,7 +131,8 @@ const CreateUserForm = () => {
                 username: values.username,
                 password: values.password,
                 firstName: values.firstName,
-                lastName: values.lastName
+                lastName: values.lastName,
+                dept_id: value,
             }),
         });
 
@@ -69,7 +155,7 @@ const CreateUserForm = () => {
     return (
     <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-        <div className="space-y-2">
+        <div className="space-y-2 space-x-2 flex">
             <FormField
             control={form.control}
             name="firstName"
@@ -87,7 +173,7 @@ const CreateUserForm = () => {
             control={form.control}
             name="lastName"
             render={({ field }) => (
-            <FormItem>
+            <FormItem className="">
                 <FormLabel>นามสกุล</FormLabel>
                 <FormControl>
                 <Input placeholder="Lastname" {...field} />
@@ -96,6 +182,48 @@ const CreateUserForm = () => {
             </FormItem>
             )}
             />
+            </div>
+            <div className="space-y-2">
+            <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={open}
+                      className="w-[200px] justify-between"
+                    >
+                      {value
+                        ? depts.find((dept) => dept.value === value)?.label
+                        : "เลือกรหัสแผนก..."}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[200px] p-0">
+                <Command>
+                <CommandInput placeholder="ค้นหารหัสแผนก..." />
+                <CommandEmpty>ไม่พบรหัสแผนก</CommandEmpty>
+                <CommandGroup>
+                    {depts.map((depts) => (
+                    <CommandItem
+                        key={depts.value}
+                        onSelect={(currentValue) => {
+                        setValue(currentValue === value ? "" : currentValue)
+                        setOpen(false)
+                        }}
+                    >
+                        <Check
+                        className={cn(
+                            "mr-2 h-4 w-4 text-black",
+                            value === depts.value ? "opacity-100" : "opacity-0"
+                        )}
+                        />
+                        {depts.label}
+                    </CommandItem>
+                    ))}
+                </CommandGroup>
+                </Command>
+            </PopoverContent>
+            </Popover>
             <FormField
             control={form.control}
             name="username"
