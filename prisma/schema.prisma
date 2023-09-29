@@ -78,6 +78,8 @@ model Admit{
   bed_id String @db.VarChar(7) @unique
   contact String @db.VarChar(160)
   symptom String @db.VarChar(255)
+  discharge_date DateTime? @db.Date
+  discharge_time DateTime? @db.Time(3)
 
   doctor Doctor @relation(fields: [doctor_id], references: [doctor_id])
   bed Bed @relation(fields: [bed_id], references: [bed_id])

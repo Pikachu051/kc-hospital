@@ -22,7 +22,7 @@ const page = async () => {
       </div>
       <div className='justify-items-center grid gap-[8vem] grid-cols-3 grid-rows-1'>
         <Button className='bg-red-400 w-[12rem] h-[8rem] text-lg'>แอดมิท</Button>
-        <Button className='bg-red-400 w-[12rem] h-[8rem] text-lg'>รายชื่อผู้ป่วยใน</Button>
+        <Link href="/patient-list" className={buttonVariants({variant: "destructive"})}>ข้อมูลผู้ป่วยใน</Link>
         <Button className='bg-red-400 w-[12rem] h-[8rem] text-lg'>ข้อมูลผู้ป่วย</Button>
       </div>
   </div>

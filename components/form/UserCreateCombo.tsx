@@ -20,24 +20,12 @@ import {
  
 const frameworks = [
   {
-    value: "next.js",
-    label: "Next.js",
+    value: "ANC",
+    label: "ANC",
   },
   {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
+    value: "CCU",
+    label: "CCU",
   },
 ]
  
@@ -88,3 +76,5 @@ export function ComboboxDemo() {
     </Popover>
   )
 }
+
+export default ComboboxDemo;

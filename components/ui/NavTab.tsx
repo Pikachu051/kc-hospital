@@ -2,12 +2,13 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
+import { getServerSession } from 'next-auth';
 
 const NavTab = () => {
     const path = usePathname();
     const links = [
         { href: '/', label: "หน้าหลัก" },
-        { href: '/patient', label: "ข้อมูลผู้ป่วย" },
+        { href: '/patient-list', label: "ข้อมูลผู้ป่วยใน" },
         { href: '/treatment', label: "ข้อมูลการรักษา" },
         { href: '/about', label: "เกี่ยวกับ"},
         { href: '/itsupport', label: "ช่วยเหลือ" },
