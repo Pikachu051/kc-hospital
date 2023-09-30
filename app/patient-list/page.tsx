@@ -4,7 +4,7 @@ import { PageWrapper } from "@/components/PageWrapper"
 const page = () => {
     return (
         <PageWrapper>
-            <div><PatientTable/></div>
+            <div className="w-full"><PatientTable/></div>
         </PageWrapper>
     )
 }
