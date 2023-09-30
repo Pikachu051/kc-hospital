@@ -140,8 +140,8 @@ model Diagnosis{
 
 model Doctor{
   doctor_id Int @id @default(autoincrement())
-  firstName String @db.VarChar(80)
-  lastName String @db.VarChar(80)
+  dFirstName String @db.VarChar(80)
+  dLastName String @db.VarChar(80)
   dept_id String @db.VarChar(10)
 
   user User?
