@@ -2,9 +2,9 @@ import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 import * as z from 'zod';
 
-// const FormSchema = z.object({
-//     hnid: z.number().min(1, 'โปรดกรอกรหัสผู้ป่วย'),
-// })
+const FormSchema = z.object({
+    hnid: z.number().min(1, 'โปรดกรอกรหัสผู้ป่วย'),
+})
 
 export async function main(){
     try{
@@ -18,10 +18,11 @@ export const GET = async (req: Request, res: NextResponse) => {
     try{
         await main();
         const body = await req.json();
+        console.log(body.hnid);
         // const id = FormSchema.parse(body);
-        const result = await db.patientinfo.findFirst({
+        const result = await db.patientinfo.findUnique({
             where: {
-                hnid: parseInt(body.hnid),
+                hnid: ,
             }
         })
         return NextResponse.json({message: "Success", result}, {status: 200});

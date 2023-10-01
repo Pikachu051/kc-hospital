@@ -108,7 +108,3 @@ export default async function page () {
     </PageWrapper>
     );
 };
-
-function getAttribute(arg0: string): any {
-  throw new Error("Function not implemented.");
-}
