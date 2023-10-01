@@ -9,6 +9,19 @@ import {
     TableCaption,
   } from "@/components/ui/table"
 import { db } from '@/lib/db';
+import { MoreHorizontal } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { get } from "http";
 
 function calAge(dob: Date) {
     const today = new Date();
@@ -24,11 +37,11 @@ function calAge(dob: Date) {
 export default async function page () {
     const patients = await db.admit.findMany();
     const patientsinfo = await db.patientinfo.findMany({
-      where: {
-        hnid: { 
-          in: patients.map((p) => p.hnid),
+        where: {
+            hnid: { 
+            in: patients.map((p) => p.hnid),
+            },
         },
-      },
     });
     const patientsdoctor = await db.doctor.findMany({
         where: {
@@ -39,20 +52,19 @@ export default async function page () {
     });
 
     patients.forEach((p) => {
-      const info = patientsinfo.find((pi) => pi.hnid === p.hnid);
-      if (info) {
-        Object.assign(p, info);
-      }
+        const info = patientsinfo.find((pi) => pi.hnid === p.hnid);
+        if (info) {
+            Object.assign(p, info);
+        }
     });
 
     patients.forEach((p) => {
         const doctor = patientsdoctor.find((pd) => pd.doctor_id === p.doctor_id);
         if (doctor) {
-          Object.assign(p, doctor);
+            Object.assign(p, doctor);
         }
     });
-        
-    
+
     const listAmount = await db.admit.count();
     return (
     <PageWrapper>
@@ -96,3 +108,7 @@ export default async function page () {
     </PageWrapper>
     );
 };
+
+function getAttribute(arg0: string): any {
+  throw new Error("Function not implemented.");
+}

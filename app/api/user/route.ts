@@ -29,16 +29,16 @@ export async function POST(req: Request) {
         
         const newDoctor = await db.doctor.create({
             data: {
-                firstName: firstName,
-                lastName: lastName,
+                dFirstName: firstName,
+                dLastName: lastName,
                 dept_id: dept
             }
         })
 
         const result = await db.doctor.findFirst({
             where: {
-                firstName: firstName,
-                lastName: lastName,
+                dFirstName: firstName,
+                dLastName: lastName,
                 dept_id: dept
             },
             orderBy: {
