@@ -29,14 +29,8 @@ const SignInForm = () => {
 
     const onSubmit = async (values:z.infer<typeof FormSchema>) => {
         const hn = parseInt(values.hnid);
-        const patientData = await fetch('/api/getPatient', {
+        const patientData = await fetch('/api/patients/'+{hn}, {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                hnid: hn,
-            }),
         });
         
         if (patientData === null || patientData === undefined){
